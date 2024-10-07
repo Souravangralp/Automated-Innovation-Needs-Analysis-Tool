@@ -1,0 +1,7 @@
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.csproj.AssemblyReference.cache
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.GeneratedMSBuildEditorConfig.editorconfig
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.AssemblyInfoInputs.cache
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.AssemblyInfo.cs
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.csproj.CoreCompileInputs.cache
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.MvcApplicationPartsAssemblyInfo.cs
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp\obj\Debug\net8.0\cc.MvcApplicationPartsAssemblyInfo.cache

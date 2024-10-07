@@ -1,0 +1,151 @@
+﻿@page "/assessment/add-edit/{AssessmentId?}"
+
+@using VisionaryNeedsAnalyzerApp.Client.Repositories.Interfaces
+@using VisionaryNeedsAnalyzerApp.Shared.Dto
+@using Newtonsoft.Json;
+@inject IIndustryClientService industryService;
+@inject IAssessmentClientService AssessmentClientService;
+@inject NavigationManager NavigationManager;
+@inject ISnackbar Snackbar;
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Large">
+
+    <MudItem xs="12">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnSaveAssessment" Disabled="(string.IsNullOrWhiteSpace(value1))">Save</MudButton>
+    </MudItem>
+
+    <MudItem xs="12" Class="mt-2"> 
+        <MudTextField Label="Assessment" @bind-Value=Model.Name></MudTextField>
+    </MudItem>
+
+    <MudItem xs="12" Class="mt-2">
+
+        <MudText Typo="Typo.caption">Choose the industry Type </MudText>
+
+        <MudAutocomplete T="string" Label="Industries" @bind-Value="value1" SearchFunc="@Search1"
+                         ResetValueOnEmptyText="true"
+                         TextChanged="(e) => OnIndustryTypeChange(e)"
+                         AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" />
+    </MudItem>
+
+    @if (string.IsNullOrWhiteSpace(value1))
+    {
+        <MudItem xs="12">
+            Please choose the industry type to continue
+        </MudItem>
+    }
+    else
+    {
+        <MudItem xs="12" Class="mt-16">
+            <MudGrid Spacing="20" Justify="Justify.Center">
+                <MudItem>
+                    <MudButton OnClick="() => OnClickWhoWeAre()">
+                        <MudPaper Height="140px" Width="140px" Elevation="2" Class="d-flex align-items-center p-2">
+                            <MudText Typo="Typo.h5">Who we are</MudText>
+                        </MudPaper>
+                    </MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudButton>
+                        <MudPaper Height="140px" Width="140px" Elevation="2" Class="d-flex align-items-center justify-content-center p-2">
+                            <MudText Typo="Typo.h5">What we do</MudText>
+                        </MudPaper>
+                    </MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudButton>
+                        <MudPaper Height="140px" Width="140px" Elevation="2" Class="d-flex align-items-center justify-content-center p-2">
+                            <MudText Typo="Typo.h5">How we do it</MudText>
+                        </MudPaper>
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+
+        </MudItem>
+    }
+</MudContainer>
+
+@code
+{
+    [Parameter] public string? AssessmentId { get; set; }
+
+    private string value1;
+
+    private async Task<IEnumerable<string>> Search1(string value, CancellationToken token)
+    {
+        await Task.Delay(5, token);
+
+        if (string.IsNullOrEmpty(value))
+            return Industries.Select(x => x.Name);
+
+        StateHasChanged();
+
+        return Industries.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name);
+    }
+
+    public List<IndustryDto> Industries { get; set; } = [];
+
+    public AssessmentDto Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrWhiteSpace(AssessmentId))
+        {
+            Model = new() { Name = "Assessment Name", IndustryType = "", IsActive = true, TotalScore = 300 };
+        }
+        else
+        {
+            Model = await AssessmentClientService.GetWithId(AssessmentId);
+
+            value1 = Model.IndustryType;
+        }
+
+        Industries = await industryService.GetAll();
+
+        StateHasChanged();
+    }
+
+    public void OnClickWhoWeAre()
+    {
+        var sectionName = "WhoWeAre";
+
+        NavigationManager.NavigateTo($"/section/{Model.UniqueId}/{sectionName}");
+    }
+
+    public void OnClickWhatWeDo()
+    {
+        NavigationManager.NavigateTo($"/section/WhatWeDo/{Model.UniqueId}");
+    }
+
+    public void OnClickHowWeDoIt()
+    {
+        NavigationManager.NavigateTo("/firstSection");
+    }
+
+    public void OnIndustryTypeChange(string value)
+    {
+        Model.IndustryType = value;
+    }
+
+    public async void OnSaveAssessment()
+    {
+        var result = await AssessmentClientService.Create(Model);
+
+        if (result.Success)
+        {
+            Snackbar.Add($"Cheers!, you have added a new Assessment.", Severity.Success);
+
+            Model = JsonConvert.DeserializeObject<AssessmentDto>(result.Model.ToString() ?? string.Empty);
+
+            StateHasChanged();
+        }
+
+        else
+        {
+            foreach (var error in result.Errors)
+            {
+                Snackbar.Add(error.Message, Severity.Error);
+            }
+        }
+    }
+}

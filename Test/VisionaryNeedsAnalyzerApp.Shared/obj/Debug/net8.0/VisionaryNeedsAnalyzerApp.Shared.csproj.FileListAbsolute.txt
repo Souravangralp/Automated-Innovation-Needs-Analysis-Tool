@@ -1,0 +1,11 @@
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\bin\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.deps.json
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\bin\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.dll
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\bin\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.pdb
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.AssemblyInfoInputs.cache
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.AssemblyInfo.cs
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.csproj.CoreCompileInputs.cache
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.dll
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\refint\VisionaryNeedsAnalyzerApp.Shared.dll
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\VisionaryNeedsAnalyzerApp.Shared.pdb
+D:\LpInfotech\Sourav\NeedAnalysis\VisionaryNeedsAnalyzerApp\VisionaryNeedsAnalyzerApp.Shared\obj\Debug\net8.0\ref\VisionaryNeedsAnalyzerApp.Shared.dll

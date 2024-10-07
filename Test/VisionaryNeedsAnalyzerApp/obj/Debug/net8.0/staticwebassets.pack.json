@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\LpInfotech\\Sourav\\NeedAnalysis\\VisionaryNeedsAnalyzerApp\\VisionaryNeedsAnalyzerApp\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.VisionaryNeedsAnalyzerApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.VisionaryNeedsAnalyzerApp.props",
+      "PackagePath": "build\\VisionaryNeedsAnalyzerApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.VisionaryNeedsAnalyzerApp.props",
+      "PackagePath": "buildMultiTargeting\\VisionaryNeedsAnalyzerApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.VisionaryNeedsAnalyzerApp.props",
+      "PackagePath": "buildTransitive\\VisionaryNeedsAnalyzerApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

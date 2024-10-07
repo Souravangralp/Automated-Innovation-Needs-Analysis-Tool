@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\LpInfotech\\Sourav\\NeedAnalysis\\VisionaryNeedsAnalyzerApp\\VisionaryNeedsAnalyzerApp.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "D:\\LpInfotech\\Sourav\\NeedAnalysis\\VisionaryNeedsAnalyzerApp\\VisionaryNeedsAnalyzerApp.Client\\obj\\Debug\\net8.0\\compressed\\mlmsvep12n.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "D:\\LpInfotech\\Sourav\\NeedAnalysis\\VisionaryNeedsAnalyzerApp\\VisionaryNeedsAnalyzerApp.Client\\wwwroot\\appsettings.Development.json",
+      "PackagePath": "staticwebassets\\appsettings.Development.json"
+    },
+    {
+      "Id": "D:\\LpInfotech\\Sourav\\NeedAnalysis\\VisionaryNeedsAnalyzerApp\\VisionaryNeedsAnalyzerApp.Client\\wwwroot\\appsettings.json",
+      "PackagePath": "staticwebassets\\appsettings.json"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.VisionaryNeedsAnalyzerApp.Client.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.VisionaryNeedsAnalyzerApp.Client.props",
+      "PackagePath": "build\\VisionaryNeedsAnalyzerApp.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.VisionaryNeedsAnalyzerApp.Client.props",
+      "PackagePath": "buildMultiTargeting\\VisionaryNeedsAnalyzerApp.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.VisionaryNeedsAnalyzerApp.Client.props",
+      "PackagePath": "buildTransitive\\VisionaryNeedsAnalyzerApp.Client.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

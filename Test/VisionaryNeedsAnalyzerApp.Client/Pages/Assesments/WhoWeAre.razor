@@ -1,0 +1,156 @@
+﻿@page "/section/{AssessmentId}/{SectionName}"
+@using VisionaryNeedsAnalyzerApp.Shared.Dto
+@inject IDialogService DialogService;
+@inject ISnackbar Snackbar;
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Large">
+    <MudItem>
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Label" Color="Color.Primary" OnClick="() => OnAddLabel()">Add Label</MudButton>
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.QuestionAnswer" Color="Color.Primary" OnClick="() => OnAddQuestion()">AddQuestion</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnSaveAssessment" Disabled="false">Save</MudButton>
+    </MudItem>
+    <MudPaper Elevation="2">
+        <MudText Class="mt-2" Typo="Typo.h5">@SectionName</MudText>
+        @foreach (var item in Questions.OrderBy(x => x.DisplayOrder))
+        {
+            if (item.QuestionType_GeneralLookUpID == 1)
+            {
+                <MudItem Class="row">
+                    <MudItem Class="col"><b>@item.Value?</b></MudItem>
+                </MudItem>
+
+                <MudRadioGroup T="int" @bind-Value='SelectedOption'>
+
+                    @for (var i = 0; i < item.Options.Count; i++)
+                    {
+                        var option = item.Options[i];
+                        var currentIndex = i;
+                        <MudItem Class="row">
+                            <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                <MudRadio T="int" Color="Color.Primary" Value="@currentIndex" Disabled="true" Size="Size.Small">@((char)('A' + currentIndex)). @option.Name</MudRadio>
+                            </MudItem>
+                        </MudItem>
+                    }
+                </MudRadioGroup>
+            }
+            if (item.QuestionType_GeneralLookUpID == 2)
+            {
+                <MudItem Class="row">
+                    <MudItem Class="col"><b>@item.Value</b></MudItem>
+                </MudItem>
+
+                <MudRadioGroup T="int" @bind-Value='SelectedOption'>
+
+                    @for (var i = 0; i < item.Options.Count; i++)
+                    {
+                        var option = item.Options[i];
+                        var currentIndex = i;
+                        <MudItem Class="row">
+                            <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                <MudRadio T="int" Color="Color.Primary" Value="@currentIndex" Disabled="true" Size="Size.Small">@((char)('A' + currentIndex)). @option.Name</MudRadio>
+                            </MudItem>
+                        </MudItem>
+                    }
+                </MudRadioGroup>
+            }
+        }
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+
+    [Parameter] public string SectionName { get; set; }
+
+    [Parameter] public string AssessmentId { get; set; }
+
+    public List<QuestionDto> Questions { get; set; }
+
+    public async void OnSaveAssessment()
+    {
+        // var result = await AssessmentClientService.Create(Model);
+
+        // if (result.Success)
+        // {
+        //     Snackbar.Add($"Cheers!, you have added a new Assessment.", Severity.Success);
+        // }
+
+        // else
+        // {
+        //     foreach (var error in result.Errors)
+        //     {
+        //         Snackbar.Add(error.Message, Severity.Error);
+        //     }
+        // }
+    }
+
+    public async void OnAddLabel()
+    {
+        // var parameters = new DialogParameters<QuestionDialog>
+        // {
+        //     { x => x.Model, null }
+        // };
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraExtraLarge, FullWidth = true };
+
+        var dialog = await DialogService.ShowAsync<QuestionDialog>("Add Label", /* parameters ,*/ options);
+
+        var result = await dialog.Result;
+
+        // Industries = await IIndustryClientService.GetAll();
+
+        StateHasChanged();
+    }
+
+    public async void OnAddQuestion()
+    {
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraExtraLarge, FullWidth = true };
+
+        var dialog = await DialogService.ShowAsync<QuestionDialog>("Add Label", /* parameters ,*/ options);
+
+        var result = await dialog.Result;
+
+        var selectedQuestionTypeId = result.Data;
+
+        var question = new QuestionDto()
+            {
+                QuestionType_GeneralLookUpID = (int)selectedQuestionTypeId,
+                Value = "Where is india Located",
+                DisplayOrder = 1,
+                Options = new List<OptionDto>()
+            {
+                new OptionDto() { Name = "Asia", DisplayOrder = 1  },
+                new OptionDto() { Name = "Europe", DisplayOrder = 2  },
+                new OptionDto() { Name = "Pacific Ocean", DisplayOrder = 3},
+            }
+
+            };
+
+        Questions.Add(question);
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var question = new QuestionDto()
+            {
+                QuestionType_GeneralLookUpID = (int)1,
+                Value = "Where is india Located",
+                DisplayOrder = 1,
+                Options = new List<OptionDto>()
+            {
+                new OptionDto() { Name = "Asia", DisplayOrder = 1  },
+                new OptionDto() { Name = "Europe", DisplayOrder = 2  },
+                new OptionDto() { Name = "Pacific Ocean", DisplayOrder = 3},
+            }
+
+            };
+
+        Questions.Add(question);
+
+        StateHasChanged();
+    }
+
+    int SelectedOption { get; set; }
+}

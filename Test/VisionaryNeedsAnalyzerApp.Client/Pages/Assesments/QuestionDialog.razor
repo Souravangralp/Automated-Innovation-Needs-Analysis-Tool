@@ -1,0 +1,185 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudContainer>
+            <MudGrid>
+                <MudItem xs="6">
+                    <MudList T="string">
+                        @foreach (var item in QuestionTypes)
+                        {
+                            <MudListItem Text="@item.Question" Icon="@Icons.Material.Filled.Inbox" OnClick="() => onOptionSelect(item.Id)" />
+                        }
+                    </MudList>
+                </MudItem>
+                <MudItem xs="6">
+                    @if (IsTrueFalse)
+                    {
+                        <MudItem Class="row">
+                            <MudItem Class="col"><b>India is not located in Asia?</b></MudItem>
+                        </MudItem>
+                        <MudRadioGroup T="int">
+                            <MudItem Class="row">
+                                <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                    <MudRadio T="int" Color="Color.Primary" Disabled="true" Size="Size.Small">True</MudRadio>
+                                </MudItem>
+                            </MudItem>
+                            <MudItem Class="row">
+                                <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                    <MudRadio T="int" Color="Color.Primary" Disabled="true" Size="Size.Small">False</MudRadio>
+                                </MudItem>
+                            </MudItem>
+                        </MudRadioGroup>
+                        <MudItem Class="row">
+                            <MudItem Class="col d-flex justify-content-end">
+                                <MudItem Class="row">
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" Disabled="true">Submit</MudButton>
+                                </MudItem>
+                            </MudItem>
+                        </MudItem>
+                    }
+                    @if (IsMutiple)
+                    {
+                        <MudItem Class="row">
+                            <MudItem Class="col"><b>India is not located in?</b></MudItem>
+                        </MudItem>
+                        <MudRadioGroup T="int">
+                            <MudItem Class="row">
+                                <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                    <MudRadio T="int" Color="Color.Primary" Disabled="true" Size="Size.Small">Asia</MudRadio>
+                                </MudItem>
+                            </MudItem>
+                            <MudItem Class="row">
+                                <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                    <MudRadio T="int" Color="Color.Primary" Disabled="true" Size="Size.Small">America</MudRadio>
+                                </MudItem>
+                            </MudItem>
+                            <MudItem Class="row">
+                                <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                    <MudRadio T="int" Color="Color.Primary" Disabled="true" Size="Size.Small">Europe</MudRadio>
+                                </MudItem>
+                            </MudItem>
+                            <MudItem Class="row">
+                                <MudItem Class="col" style="display: flex; justify-content: start; align-items: center;">
+                                    <MudRadio T="int" Color="Color.Primary" Disabled="true" Size="Size.Small">PacificOcean</MudRadio>
+                                </MudItem>
+                            </MudItem>
+                        </MudRadioGroup>
+                        <MudItem Class="row">
+                            <MudItem Class="col d-flex justify-content-end">
+                                <MudItem Class="row">
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" Disabled="true">Submit</MudButton>
+                                </MudItem>
+                            </MudItem>
+                        </MudItem>
+                    }
+                    @if (IsPercentage)
+                    {
+                        <MudItem Class="row">
+                            <MudItem Class="col"><b>How much in percentage of water present in Earth?</b></MudItem>
+                        </MudItem>
+                        <MudItem Class="row">
+                            <MudNumericField Class="col" T="double" Disabled=" true"></MudNumericField>
+                        </MudItem>
+                        <MudItem Class="row">
+                            <MudItem Class="col d-flex justify-content-end">
+                                <MudItem Class="row">
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" Disabled="true">Submit</MudButton>
+                                </MudItem>
+                            </MudItem>
+                        </MudItem>
+                    }
+                    @if (IsText)
+                    {
+                        <MudItem Class="row">
+                            <MudItem Class="col"><b>Write something about yourself</b></MudItem>
+                        </MudItem>
+                        <MudItem Class="row">
+                            <MudTextField Class="col" T="string" Disabled=" true"></MudTextField>
+                        </MudItem>
+                        <MudItem Class="row">
+                            <MudItem Class="col d-flex justify-content-end">
+                                <MudItem Class="row">
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" Disabled="true">Submit</MudButton>
+                                </MudItem>
+                            </MudItem>
+                        </MudItem>
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Select</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    public List<QuestionType> QuestionTypes { get; set; } = [];
+
+    public int SelectedQuestionTypeId { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(SelectedQuestionTypeId));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    public bool IsTrueFalse { get; set; }
+    public bool IsMutiple { get; set; }
+    public bool IsText { get; set; }
+    public bool IsPercentage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        QuestionTypes = new List<QuestionType>()
+        {
+            new() { Id = 1, Question = "Multiple Choice"},
+            new() { Id = 2, Question = "True False"},
+            new() { Id = 3, Question = "Text"},
+            new() { Id = 4, Question = "Percentage"},
+        };
+    }
+
+    public void onOptionSelect(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                IsMutiple = true;
+                IsPercentage = false;
+                IsTrueFalse = false;
+                IsText = false;
+                break;
+            case 2:
+                IsMutiple = false;
+                IsPercentage = false;
+                IsTrueFalse = true;
+                IsText = false;
+                break;
+            case 3:
+                IsMutiple = false;
+                IsPercentage = false;
+                IsTrueFalse = false;
+                IsText = true;
+                break;
+            case 4:
+                IsMutiple = false;
+                IsPercentage = true;
+                IsTrueFalse = false;
+                IsText = false;
+                break;
+        }
+
+        SelectedQuestionTypeId = id;
+
+        StateHasChanged();
+    }
+
+    public class QuestionType
+    {
+        public int Id { get; set; }
+
+        public string Question { get; set; }
+    }
+}

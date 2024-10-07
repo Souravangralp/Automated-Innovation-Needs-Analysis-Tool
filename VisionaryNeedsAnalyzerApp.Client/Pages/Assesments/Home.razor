@@ -1,0 +1,121 @@
+﻿@page "/assessment"
+
+@using VisionaryNeedsAnalyzerApp.Client.Pages.Common
+@using VisionaryNeedsAnalyzerApp.Client.Repositories.Interfaces
+@using VisionaryNeedsAnalyzerApp.Client.Repositories.Services
+@using VisionaryNeedsAnalyzerApp.Shared.Common
+@using VisionaryNeedsAnalyzerApp.Shared.Dto
+@inject IAssessmentClientService AssessmentClientService;
+@inject IDialogService DialogService;
+@inject NavigationManager NavigationManager;
+@inject ISnackbar Snackbar;
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Large">
+    <MudTable Items="@Assessments" Dense="@dense" Hover="@hover" Bordered="@bordered" Filter="new Func<AssessmentDto,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Assessments</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudButton Color="Color.Primary" Class="ms-2" StartIcon="@Icons.Material.Filled.AddCircle" OnClick="OnAddAssessment">Add</MudButton>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Name</MudTh>
+            <MudTh>IndustryType</MudTh>
+            <MudTh>TotalScore</MudTh>
+            <MudTh>IsLive</MudTh>
+            <MudTh>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Code">@context.IndustryType</MudTd>
+            <MudTd DataLabel="Description">@context.TotalScore</MudTd>
+            <MudTd DataLabel="Description">@context.IsLive</MudTd>
+            <MudTd>
+                <MudIconButton Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" OnClick="(e) =>  OnEdit(context)" />
+                <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="(e) =>  OnDelete(context)" />
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+</MudContainer>
+
+@code {
+    private bool dense = true;
+    private bool hover = true;
+    private bool bordered = true;
+    private string searchString1 = "";
+    private AssessmentDto selectedItem1 = null;
+    private HashSet<AssessmentDto> selectedItems = new HashSet<AssessmentDto>();
+
+
+    private List<AssessmentDto> Assessments = new List<AssessmentDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Assessments = await AssessmentClientService.GetAll();
+    }
+
+    private bool FilterFunc1(AssessmentDto element) => FilterFunc(element, searchString1);
+
+    private bool FilterFunc(AssessmentDto element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.IndustryType.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{element.Name} {element.Name} {element.IndustryType}".Contains(searchString))
+            return true;
+        return false;
+    }
+
+    public async void OnAddAssessment()
+    {
+        NavigationManager.NavigateTo("/assessment/add-edit");
+    }
+
+    public async void OnEdit(AssessmentDto assessmentDto)
+    {
+        NavigationManager.NavigateTo($"/assessment/add-edit/{assessmentDto.UniqueId}");
+    }
+
+    public async void OnDelete(AssessmentDto assessmentDto)
+    {
+        var parameters = new DialogParameters<ConfirmDeleteDialog>
+        {
+            { x => x.ContentText, $"Do you really want to delete {assessmentDto.Name}? This process cannot be undone." },
+            { x => x.ButtonText, "Delete" },
+            { x => x.Color, Color.Error }
+        };
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Large };
+
+        var dialog = await DialogService.ShowAsync<ConfirmDeleteDialog>("Delete", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var actionResult = await AssessmentClientService.Delete(assessmentDto.UniqueId);
+
+            if (!actionResult.Success && actionResult.Errors.Any())
+            {
+                foreach (var error in actionResult.Errors)
+                {
+                    Snackbar.Add(error.Message, Severity.Error);
+                }
+            }
+            else
+            {
+                Snackbar.Add("Industry Deleted", Severity.Success);
+            }
+
+            Assessments = await AssessmentClientService.GetAll();
+
+            StateHasChanged();
+        }
+    }
+}
